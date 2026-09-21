@@ -241,28 +241,82 @@
   }
   .mobile-menu .btn{ margin-top: 24px; width: 100%; }
 
+  /* Top bar */
+  .topbar{
+    background: var(--accent-deep);
+    color: var(--on-deep-muted);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+  .topbar .wrap{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  .topbar-group{ display: flex; align-items: center; gap: 24px; }
+  .topbar a{ color: var(--on-deep); transition: color 0.15s ease; }
+  .topbar a:hover{ color: var(--accent-light); }
+  .topbar svg{ width: 12px; height: 12px; stroke: var(--accent-light); margin-right: 8px; vertical-align: -1px; }
+
   /* Hero */
   .hero{
-    --section-y: 64px;
+    --section-y: 80px;
     position: relative;
+    overflow: hidden;
+    background: var(--bg-off);
   }
   .hero::before{
     content: "";
     position: absolute;
-    inset: 0 0 auto 0;
-    height: 72%;
-    background: radial-gradient(60% 80% at 85% 0%, var(--accent-soft) 0%, rgba(243,235,248,0) 70%);
+    width: 960px;
+    height: 960px;
+    left: -320px;
+    top: -480px;
+    background: radial-gradient(circle, rgba(170,112,199,0.18) 0%, rgba(170,112,199,0) 65%);
     pointer-events: none;
   }
   .hero .wrap{ position: relative; }
-  .hero-top{
+  .hero-grid{
     display: grid;
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
     gap: 64px;
-    align-items: end;
+    align-items: center;
   }
-  .hero-title{ container-type: inline-size; }
+  .hero-copy{ container-type: inline-size; }
+
+  .status-pill{
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-btn);
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 12px;
+    padding-right: 16px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+  .status-dot{
+    position: relative;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .status-pill.is-open .status-dot{ background: var(--accent-dark); box-shadow: 0 0 0 4px var(--accent-soft); }
+  .status-pill.is-closed .status-dot{ background: var(--text-faint); }
+  .status-pill span.sub{ color: var(--text-faint); font-weight: 500; }
+
   .hero h1{
+    margin-top: 32px;
     font-size: 64px;
     font-size: clamp(28px, 6vw, 96px);
     font-size: clamp(28px, 11.8cqi, 96px);
@@ -270,81 +324,157 @@
     letter-spacing: -0.02em;
   }
   .hero h1 span{ display: block; white-space: nowrap; }
-  .hero-side p{ font-size: 20px; line-height: 1.55; max-width: 40ch; }
+  .hero-copy > p{ margin-top: 24px; font-size: 20px; line-height: 1.55; max-width: 44ch; }
   .hero-actions{
-    margin-top: 32px;
+    margin-top: 40px;
     display: flex;
     align-items: center;
     gap: 32px;
     flex-wrap: wrap;
   }
+  .hero-proof{
+    list-style: none;
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .hero-proof li{ display: flex; flex-direction: column; gap: 12px; font-size: 16px; font-weight: 500; line-height: 1.4; color: var(--text); }
+  .hero-proof svg{ width: 24px; height: 24px; stroke: var(--accent-dark); }
 
-  .hero-media{
-    position: relative;
-    margin-top: 64px;
+  .hero-visual{ position: relative; padding-bottom: 48px; }
+  .hv-main{
+    margin-left: 80px;
     border-radius: var(--radius-card);
     overflow: hidden;
     background: var(--accent-soft);
   }
-  .hero-media img{
-    width: 100%;
-    aspect-ratio: 21 / 9;
-    object-fit: cover;
-    object-position: center 35%;
-  }
-  .hero-card{
+  .hv-main img{ width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 30%; }
+  .hv-small{
     position: absolute;
-    left: 24px;
-    bottom: 24px;
+    left: 0;
+    bottom: 0;
+    width: 40%;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    border: 8px solid var(--bg-off);
+    background: var(--accent-soft);
+    box-shadow: 0 32px 64px -32px rgba(35,21,48,0.45);
+  }
+  .hv-small img{ width: 100%; aspect-ratio: 1; object-fit: cover; }
+  .hv-card{
+    position: absolute;
+    top: 32px;
+    right: 24px;
     background: #ffffff;
     border-radius: var(--radius-sm);
-    padding: 20px 24px;
-    display: flex;
-    gap: 32px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 20px;
+    padding-right: 20px;
     box-shadow: 0 24px 48px -24px rgba(35,21,48,0.40);
+    display: flex;
+    align-items: center;
+    gap: 16px;
   }
-  .hero-card div{ display: flex; flex-direction: column; gap: 4px; }
-  .hero-card small{
+  .hv-card .ico{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hv-card .ico svg{ width: 20px; height: 20px; stroke: var(--accent-dark); }
+  .hv-card small{ display: block; font-size: 12px; color: var(--text-faint); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+  .hv-card strong{ font-size: 16px; font-weight: 500; }
+  .hv-badge{
+    position: absolute;
+    right: 24px;
+    bottom: 80px;
+    background: var(--accent-deep);
+    color: var(--on-deep);
+    border-radius: var(--radius-sm);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 24px;
+    padding-right: 24px;
+    max-width: 224px;
+  }
+  .hv-badge .big{ display: block; font-family: var(--serif); font-size: 48px; line-height: 1; color: var(--accent-light); margin-bottom: 8px; }
+  .hv-badge span{ font-size: 16px; line-height: 1.4; }
+
+  /* Section head (zajednički) */
+  .section-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+  .section-head h2{ max-width: 20ch; }
+  .section-head > p{ max-width: 44ch; }
+
+  /* Situations */
+  .situations-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 64px;
+  }
+  .situation{
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-off);
+    border-radius: var(--radius-card);
+    padding-top: 32px;
+    padding-bottom: 24px;
+    padding-left: 32px;
+    padding-right: 32px;
+    transition: background 0.25s ease, box-shadow 0.25s ease;
+  }
+  .situation:hover{ background: var(--accent-soft); box-shadow: 0 24px 48px -32px var(--accent-glow); }
+  .situation .quote{
+    font-family: var(--serif);
+    font-size: 32px;
+    line-height: 1.1;
+    color: var(--text);
+  }
+  .situation .quote em{ color: var(--accent-dark); }
+  .situation p{ margin-top: 16px; flex-grow: 1; }
+  .situation .go{
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
     font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--text-faint);
+    color: var(--accent-dark);
   }
-  .hero-card strong{ font-size: 16px; font-weight: 500; }
-  .hero-card .dot{
-    display: inline-block;
-    width: 8px;
-    height: 8px;
+  .situation .go i{
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    background: var(--accent);
-    margin-right: 8px;
-    vertical-align: middle;
-  }
-
-  /* Trust strip */
-  .trust{
-    --section-y: 0px;
-  }
-  .trust-grid{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-  }
-  .trust-item{
-    display: flex;
+    border: 1px solid var(--accent-line);
+    display: inline-flex;
     align-items: center;
-    gap: 16px;
-    padding-top: 32px;
-    padding-bottom: 32px;
-    padding-right: 24px;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s ease, border-color 0.2s ease;
   }
-  .trust-item + .trust-item{ border-left: 1px solid var(--line); padding-left: 32px; }
-  .trust-item svg{ flex-shrink: 0; width: 28px; height: 28px; stroke: var(--accent-dark); }
-  .trust-item span{ font-size: 16px; font-weight: 500; line-height: 1.4; color: var(--text); }
-
+  .situation .go svg{ width: 16px; height: 16px; stroke: var(--accent-dark); transition: stroke 0.2s ease; }
+  .situation:hover .go i{ background: var(--accent-dark); border-color: var(--accent-dark); }
+  .situation:hover .go svg{ stroke: #ffffff; }
   /* Services */
+  .services{ background: var(--bg-off); }
   .services-grid{
     display: grid;
     grid-template-columns: 5fr 7fr;
@@ -418,41 +548,45 @@
   .about h2 em{ color: var(--accent-light); }
   .about .label{ color: var(--accent-light); }
   .about p{ color: var(--on-deep-muted); }
-  .about-grid{
+  .about-head{
     display: grid;
-    grid-template-columns: 5fr 7fr;
-    gap: 96px;
-    align-items: center;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 64px;
+    align-items: end;
   }
-  .about-media{
+  .about-head h2{ max-width: 16ch; }
+  .about-head p + p{ margin-top: 16px; }
+  .team-photo{
     position: relative;
+    margin-top: 64px;
     border-radius: var(--radius-card);
     overflow: hidden;
   }
-  .about-media img{ width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
-  .about-media figcaption{
+  .team-photo img{ width: 100%; aspect-ratio: 21 / 9; object-fit: cover; object-position: center 30%; }
+  .team-photo figcaption{
     position: absolute;
-    left: 16px;
-    right: 16px;
-    bottom: 16px;
-    background: rgba(35,21,48,0.84);
-    border-radius: var(--radius-sm);
-    padding: 16px 20px;
+    left: 24px;
+    bottom: 24px;
+    background: #ffffff;
+    color: var(--text);
+    border-radius: var(--radius-btn);
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 20px;
+    padding-right: 20px;
     font-size: 16px;
-    color: var(--on-deep);
+    font-weight: 500;
   }
-  .about-media figcaption span{ display: block; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 4px; }
-  .about-text > p{ margin-top: 24px; max-width: 56ch; font-size: 20px; line-height: 1.55; }
-  .about-text > p + p{ font-size: 16px; }
+  .team-photo figcaption span{ color: var(--text-faint); font-weight: 400; }
   .about-features{
     list-style: none;
-    margin-top: 48px;
+    margin-top: 64px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     border-top: 1px solid var(--on-deep-line);
   }
   .about-features li{
-    padding-top: 24px;
+    padding-top: 32px;
     padding-right: 24px;
     font-size: 16px;
     font-weight: 500;
@@ -462,56 +596,77 @@
   .about-features .num{
     display: block;
     font-family: var(--serif);
-    font-size: 40px;
+    font-size: 48px;
     line-height: 1;
     color: var(--accent-light);
-    margin-bottom: 12px;
+    margin-bottom: 16px;
   }
 
   /* Process */
-  .process-head{
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    gap: 48px;
-    flex-wrap: wrap;
-  }
-  .process-head h2{ max-width: none; }
-  .process-head p{ max-width: 40ch; }
   .process-grid{
-    list-style: none;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
-    margin-top: 64px;
-    counter-reset: step;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 96px;
+    align-items: start;
   }
-  .process-card{
-    position: relative;
-    padding-top: 40px;
+  .process-media{
+    position: sticky;
+    top: 120px;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    background: var(--accent-soft);
+  }
+  .process-media img{ width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+  .process-media figcaption{
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    background: #ffffff;
+    border-radius: var(--radius-sm);
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 16px;
+    color: var(--text);
+  }
+  .process-media figcaption small{ display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-dark); margin-bottom: 4px; }
+  .process-intro h2{ max-width: none; }
+  .process-intro p{ margin-top: 24px; max-width: 48ch; }
+  .steps{ list-style: none; margin-top: 48px; }
+  .step{
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 24px;
+    padding-top: 32px;
+    padding-bottom: 32px;
     border-top: 1px solid var(--line);
   }
-  .process-card::before{
-    content: "";
-    position: absolute;
-    top: -1px;
-    left: 0;
-    width: 64px;
-    height: 2px;
-    background: var(--accent-dark);
-  }
-  .process-num{
+  .step:last-child{ border-bottom: 1px solid var(--line); }
+  .step-num{
     font-family: var(--serif);
     font-size: 64px;
-    line-height: 1;
+    line-height: 0.9;
     color: var(--accent);
-    margin-bottom: 24px;
   }
-  .process-card h3{ font-size: 28px; margin-bottom: 12px; }
-  .process-card p{ max-width: 36ch; }
+  .step h3{ font-size: 32px; margin-bottom: 12px; }
+  .step p{ max-width: 48ch; }
+  .step-tags{ display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .step-tags span{
+    font-size: 12px;
+    font-weight: 500;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-radius: var(--radius-btn);
+    background: var(--accent-soft);
+    color: var(--accent-dark);
+  }
 
   .process-cta{
-    margin-top: 64px;
+    margin-top: 48px;
     padding-top: 32px;
     padding-bottom: 32px;
     padding-left: 32px;
@@ -520,17 +675,71 @@
     background: var(--bg-off);
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 16px;
     flex-wrap: wrap;
   }
-  .process-cta .phone-note{ margin-left: auto; font-size: 16px; color: var(--text-faint); }
+  .process-cta .phone-note{ width: 100%; font-size: 16px; color: var(--text-faint); }
 
+  /* FAQ */
+  .faq{ background: var(--bg-off); }
+  .faq-grid{
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 96px;
+    align-items: start;
+  }
+  .faq-intro p{ margin-top: 24px; max-width: 40ch; }
+  .faq-intro .btn-tertiary{ margin-top: 32px; }
+  .faq-list{ border-top: 1px solid var(--line); }
+  .faq-list details{ border-bottom: 1px solid var(--line); }
+  .faq-list summary{
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    padding-top: 28px;
+    padding-bottom: 28px;
+    font-family: var(--serif);
+    font-size: 28px;
+    line-height: 1.15;
+    color: var(--text);
+    transition: color 0.2s ease;
+  }
+  .faq-list summary::-webkit-details-marker{ display: none; }
+  .faq-list summary:hover{ color: var(--accent-dark); }
+  .faq-list summary i{
+    position: relative;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--accent-line);
+    background: #ffffff;
+    transition: background 0.2s ease, transform 0.3s ease;
+  }
+  .faq-list summary i::before, .faq-list summary i::after{
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 12px;
+    height: 1.5px;
+    background: var(--accent-dark);
+    transform: translate(-50%, -50%);
+  }
+  .faq-list summary i::after{ transform: translate(-50%, -50%) rotate(90deg); transition: opacity 0.2s ease; }
+  .faq-list details[open] summary i{ background: var(--accent-dark); transform: rotate(180deg); }
+  .faq-list details[open] summary i::before{ background: #ffffff; }
+  .faq-list details[open] summary i::after{ opacity: 0; }
+  .faq-list details p{ padding-bottom: 28px; max-width: 56ch; margin-top: -8px; }
   /* Gallery */
-  .gallery{ --section-y: 0px; }
   .gallery-grid{
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 16px;
+    margin-top: 96px;
   }
   .gallery-grid figure{
     position: relative;
@@ -540,7 +749,7 @@
   }
   .gallery-grid img{
     width: 100%;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 4 / 3;
     object-fit: cover;
     transition: transform 0.6s ease;
   }
@@ -624,6 +833,7 @@
   }
   .contact-item p, .contact-item a{ color: var(--on-deep); font-size: 16px; }
   .contact-item a:hover{ color: var(--accent-light); }
+  .contact-item .map-link{ display: inline-block; margin-top: 4px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-light); }
 
   .contact-form{
     background: #ffffff;
@@ -725,28 +935,31 @@
   @media (max-width: 1100px){
     nav.desktop-nav{ gap: 24px; }
     .nav-phone{ display: none; }
+    .hv-main{ margin-left: 48px; }
+    .hero-proof{ grid-template-columns: 1fr; gap: 16px; }
+    .hero-proof li{ flex-direction: row; align-items: center; }
   }
 
   @media (max-width: 991px){
     :root{ --wrap-pad: 24px; --section-y: 96px; }
+    .topbar{ display: none; }
     nav.desktop-nav, .nav-cta{ display: none; }
     .hamburger{ display: flex; }
-    .hero{ --section-y: 48px; }
-    .trust{ --section-y: 0px; }
-    .gallery{ --section-y: 0px; }
-    .hero-top{ grid-template-columns: minmax(0, 1fr); gap: 32px; }
-    .hero-media{ margin-top: 48px; }
-    .hero-media img{ aspect-ratio: 16 / 10; }
-    .trust-grid{ grid-template-columns: repeat(2, 1fr); }
-    .trust-item:nth-child(3){ border-left: none; padding-left: 0; }
-    .trust-item:nth-child(n+3){ border-top: 1px solid var(--line); }
+    .hero{ --section-y: 56px; }
+    .hero-grid{ grid-template-columns: minmax(0, 1fr); gap: 56px; }
+    .hero-visual{ max-width: 560px; }
+    .situations-grid{ grid-template-columns: repeat(2, 1fr); }
     .services-grid{ grid-template-columns: 1fr; gap: 48px; }
     .services-intro{ position: static; }
-    .about-grid{ grid-template-columns: 1fr; gap: 56px; }
-    .about-media{ max-width: 480px; }
-    .process-grid{ grid-template-columns: 1fr; gap: 40px; }
-    .process-cta .phone-note{ margin-left: 0; width: 100%; }
-    .gallery-grid{ grid-template-columns: repeat(2, 1fr); }
+    .about-head{ grid-template-columns: minmax(0, 1fr); gap: 32px; }
+    .team-photo img{ aspect-ratio: 16 / 9; }
+    .about-features{ grid-template-columns: repeat(2, 1fr); }
+    .about-features li:nth-child(3){ padding-left: 0; border-left: none; }
+    .about-features li:nth-child(n+3){ border-top: 1px solid var(--on-deep-line); margin-top: 32px; }
+    .process-grid{ grid-template-columns: minmax(0, 1fr); gap: 48px; }
+    .process-media{ position: relative; top: 0; max-width: 480px; }
+    .faq-grid{ grid-template-columns: minmax(0, 1fr); gap: 48px; }
+    .gallery-grid{ margin-top: 64px; }
     .contact-grid{ grid-template-columns: 1fr; }
     .footer-grid{ grid-template-columns: 1fr 1fr; }
     .footer-brand{ grid-column: 1 / -1; }
@@ -755,35 +968,41 @@
   @media (max-width: 768px){
     :root{ --wrap-pad: 20px; --section-y: 80px; }
     .hero{ --section-y: 40px; }
-    .trust{ --section-y: 0px; }
-    .gallery{ --section-y: 0px; }
-    .hero-side p, .lead, .about-text > p{ font-size: 16px; }
-    .hero-actions{ gap: 24px; }
+    .hero-copy > p, .lead{ font-size: 16px; }
+    .hero-actions{ gap: 24px; margin-top: 32px; }
     .hero-actions .btn, .form-foot .btn, .process-cta .btn{ width: 100%; white-space: normal; justify-content: space-between; text-align: left; }
     .hero-actions .btn .arrow, .form-foot .btn .arrow, .process-cta .btn .arrow{ flex-shrink: 0; }
-    .hero-media img{ aspect-ratio: 4 / 3; }
-    .hero-card{
-      position: static;
-      border-radius: 0;
-      box-shadow: none;
-      flex-direction: column;
-      gap: 16px;
-      padding-left: 20px;
-      padding-right: 20px;
-      background: var(--accent-soft);
-    }
-    .trust-grid{ grid-template-columns: 1fr; }
-    .trust-item{ padding-top: 20px; padding-bottom: 20px; }
-    .trust-item + .trust-item{ border-left: none; padding-left: 0; border-top: 1px solid var(--line); }
+    .process-cta .btn-secondary{ justify-content: center; }
+    .hero-proof{ margin-top: 40px; padding-top: 24px; }
+    .hv-main{ margin-left: 20%; }
+    .hv-main img{ aspect-ratio: 4 / 5; }
+    .hv-small{ width: 44%; border-width: 4px; }
+    .hv-card{ top: 16px; right: 16px; left: auto; padding-left: 12px; padding-right: 16px; padding-top: 12px; padding-bottom: 12px; gap: 12px; }
+    .hv-card .ico{ width: 32px; height: 32px; }
+    .hv-card .ico svg{ width: 16px; height: 16px; }
+    .hv-card strong{ font-size: 12px; }
+    .hv-badge{ right: 16px; bottom: 64px; max-width: 160px; padding-top: 16px; padding-bottom: 16px; padding-left: 16px; padding-right: 16px; }
+    .hv-badge .big{ font-size: 32px; }
+    .hv-badge span{ font-size: 12px; }
+    .situations-grid{ grid-template-columns: 1fr; margin-top: 40px; gap: 12px; }
+    .situation{ padding-top: 24px; padding-left: 24px; padding-right: 24px; }
+    .situation .quote{ font-size: 28px; }
     .service-row{ grid-template-columns: 32px 1fr; gap: 16px; padding-top: 24px; padding-bottom: 24px; }
     .service-ico{ display: none; }
     .service-row h3{ font-size: 28px; }
-    .about-features{ grid-template-columns: 1fr; }
-    .about-features li{ padding-bottom: 24px; padding-right: 0; }
-    .about-features li + li{ padding-left: 0; border-left: none; border-top: 1px solid var(--on-deep-line); }
-    .process-num{ font-size: 48px; }
+    .team-photo{ margin-top: 40px; }
+    .team-photo img{ aspect-ratio: 4 / 3; }
+    .team-photo figcaption{ left: 12px; bottom: 12px; right: 12px; border-radius: var(--radius-sm); font-size: 12px; padding-top: 8px; padding-bottom: 8px; padding-left: 12px; padding-right: 12px; }
+    .about-features{ grid-template-columns: 1fr; margin-top: 40px; }
+    .about-features li{ padding-bottom: 24px; padding-right: 0; padding-top: 24px; }
+    .about-features li + li, .about-features li:nth-child(3){ padding-left: 0; border-left: none; border-top: 1px solid var(--on-deep-line); margin-top: 0; }
+    .about-features .num{ font-size: 40px; }
+    .step{ grid-template-columns: 56px 1fr; gap: 16px; padding-top: 24px; padding-bottom: 24px; }
+    .step-num{ font-size: 48px; }
+    .step h3{ font-size: 28px; }
     .process-cta{ padding-left: 24px; padding-right: 24px; }
-    .process-cta .btn-secondary{ justify-content: center; }
+    .faq-list summary{ font-size: 24px; padding-top: 20px; padding-bottom: 20px; }
+    .faq-list details p{ padding-bottom: 20px; }
     .gallery-grid{
       grid-template-columns: none;
       grid-auto-flow: column;
@@ -799,12 +1018,24 @@
     .gallery-grid figure{ scroll-snap-align: start; }
     .contact-info, .contact-form{ padding-top: 40px; padding-bottom: 40px; padding-left: 24px; padding-right: 24px; }
     .form-row{ grid-template-columns: 1fr; }
-    .form-foot .btn{ width: 100%; }
     .footer-grid{ grid-template-columns: 1fr; gap: 32px; }
   }
 </style>
 </head>
 <body>
+
+  <div class="topbar">
+    <div class="wrap">
+      <div class="topbar-group">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>Cara Lazara 15, 36000 Kraljevo</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Pon - Pet 08-20h · Sub 09-14h</span>
+      </div>
+      <div class="topbar-group">
+        <a href="mailto:info@erdoglijadental.com">info@erdoglijadental.com</a>
+        <a href="tel:0641234567">064/123-4567</a>
+      </div>
+    </div>
+  </div>
 
   <header id="site-header">
     <div class="wrap navbar">
@@ -814,7 +1045,8 @@
       <nav class="desktop-nav">
         <a href="#usluge">Usluge</a>
         <a href="#o-nama">O nama</a>
-        <a href="#zakazivanje">Zakazivanje</a>
+        <a href="#zakazivanje">Prvi pregled</a>
+        <a href="#pitanja">Pitanja</a>
         <a href="#kontakt">Kontakt</a>
       </nav>
       <div class="nav-cta">
@@ -833,77 +1065,120 @@
     <div class="mobile-menu wrap" id="mobileMenu">
       <a href="#usluge">Usluge</a>
       <a href="#o-nama">O nama</a>
-      <a href="#zakazivanje">Zakazivanje</a>
+      <a href="#zakazivanje">Prvi pregled</a>
+      <a href="#pitanja">Pitanja</a>
       <a href="#kontakt">Kontakt</a>
       <a href="#kontakt" class="btn btn-primary">Zakaži pregled</a>
     </div>
   </header>
 
   <section class="hero">
-    <div class="wrap">
-      <div class="hero-top">
-        <div class="hero-title">
-          <span class="label">Stomatološka ordinacija · Kraljevo</span>
-          <h1><span>Zdrav osmeh, bez čekanja</span><span>i <em>bez nervoze</em></span></h1>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <div class="status-pill" id="openStatus">
+          <span class="status-dot"></span>
+          <span class="main">Kraljevo, Cara Lazara 15</span>
+          <span class="sub">Pon - Sub</span>
         </div>
-        <div class="hero-side">
-          <p>Sve stomatološke usluge na jednom mestu u Kraljevu, od redovnog pregleda do implanta. Javi se telefonom ili preko forme i dobijaš termin ove nedelje.</p>
-          <div class="hero-actions">
-            <a href="#kontakt" class="btn btn-primary has-arrow">Zakaži besplatnu konsultaciju
-              <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span>
-            </a>
-            <a href="tel:036123456" class="btn-tertiary">036/123-456</a>
-          </div>
+        <h1><span>Zdrav osmeh, bez čekanja</span><span>i <em>bez nervoze</em></span></h1>
+        <p>Sve stomatološke usluge na jednom mestu u Kraljevu, od redovnog pregleda do implanta. Javi se telefonom ili preko forme i dobijaš termin ove nedelje.</p>
+        <div class="hero-actions">
+          <a href="#kontakt" class="btn btn-primary has-arrow">Zakaži besplatnu konsultaciju
+            <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span>
+          </a>
+          <a href="tel:036123456" class="btn-tertiary">ili pozovi 036/123-456</a>
         </div>
+        <ul class="hero-proof">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M3 11h18"/><path d="M9 16l2 2 4-4"/></svg>
+            Termin još ove nedelje
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z"/><path d="M14 3v5h5"/><path d="M9 13h6"/><path d="M9 17h4"/></svg>
+            Plan i cena pre početka
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 22h8"/><path d="M12 18v4"/><path d="M7 11h2l1.5-3 3 6 1.5-3h2"/></svg>
+            Digitalni snimci u ordinaciji
+          </li>
+        </ul>
       </div>
 
-      <figure class="hero-media">
-        <img src="assets/image00007.jpg" alt="Tim stomatologa i sestara Erdoglija Dental u ordinaciji u Kraljevu">
-        <figcaption class="hero-card">
+      <div class="hero-visual">
+        <figure class="hv-main">
+          <img src="assets/kraljevo-estetska-stomatologija.jpg" alt="Pacijentkinja se smeje i gleda svoj osmeh u ogledalu posle tretmana">
+        </figure>
+        <figure class="hv-small">
+          <img src="assets/deciji-zubar-kraljevo-erdoglija-dental.jpg" alt="Nasmejan dečak u stomatološkoj stolici">
+        </figure>
+        <div class="hv-card">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 5-3.5 7.5-7 9-3.5-1.5-7-4-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></span>
           <div>
-            <small>Radno vreme</small>
-            <strong><span class="dot"></span>Pon - Pet 08-20h · Sub 09-14h</strong>
+            <small>Prvi dolazak</small>
+            <strong>Besplatna konsultacija</strong>
           </div>
-          <div>
-            <small>Adresa</small>
-            <strong>Cara Lazara 15, Kraljevo</strong>
-          </div>
-        </figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <section class="trust" aria-label="Zašto Erdoglija Dental">
-    <div class="wrap">
-      <div class="trust-grid">
-        <div class="trust-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-          <span>Osam oblasti stomatologije na jednoj adresi</span>
         </div>
-        <div class="trust-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 22h8"/><path d="M12 18v4"/><path d="M7 11h2l1.5-3 3 6 1.5-3h2"/></svg>
-          <span>Savremena dijagnostika i digitalni snimci</span>
-        </div>
-        <div class="trust-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z"/><path d="M14 3v5h5"/><path d="M9 13h6"/><path d="M9 17h4"/></svg>
-          <span>Plan terapije i cena pre nego što počnemo</span>
-        </div>
-        <div class="trust-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-          <span>Radimo i subotom, od 09 do 14h</span>
+        <div class="hv-badge">
+          <span class="big">08</span>
+          <span>oblasti stomatologije pod jednim krovom</span>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="usluge">
+  <section id="problemi">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="label">Odakle da kreneš</span>
+          <h2>Šta te <em>dovodi</em> kod nas?</h2>
+        </div>
+        <p>Ne moraš da znaš tačan naziv problema. Izaberi ono što ti je najbliže, ostalo rešavamo na pregledu.</p>
+      </div>
+
+      <div class="situations-grid">
+        <a href="#kontakt" class="situation reveal">
+          <span class="quote">„Boli me <em>zub</em>“</span>
+          <p>Bol koja se vraća obično dolazi iz korena. Lečimo kanal i spašavamo zub umesto da ga vadimo.</p>
+          <span class="go">Endodoncija <i><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></i></span>
+        </a>
+        <a href="#kontakt" class="situation reveal">
+          <span class="quote">„Fali mi <em>zub</em>“</span>
+          <p>Implant, krunica ili most, zavisno od kosti i zuba pored. Na pregledu ti kažemo šta za tebe ima smisla.</p>
+          <span class="go">Implantologija i protetika <i><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></i></span>
+        </a>
+        <a href="#kontakt" class="situation reveal">
+          <span class="quote">„Ne volim svoj <em>osmeh</em>“</span>
+          <p>Beljenje, fasete i korekcija oblika zuba, za osmeh koji rado pokazuješ na slikama i pri razgovoru.</p>
+          <span class="go">Estetska stomatologija <i><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></i></span>
+        </a>
+        <a href="#kontakt" class="situation reveal">
+          <span class="quote">„Krvare mi <em>desni</em>“</span>
+          <p>Desni koje krvare ili se povlače lečimo na vreme, pre nego što to ugrozi kost i zub koji stoji u njoj.</p>
+          <span class="go">Parodontologija <i><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></i></span>
+        </a>
+        <a href="#kontakt" class="situation reveal">
+          <span class="quote">„Zubi su mi <em>krivi</em>“</span>
+          <p>Fiksni i mobilni aparati, za decu i za odrasle koji su ispravljanje odlagali godinama.</p>
+          <span class="go">Ortodoncija <i><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></i></span>
+        </a>
+        <a href="#kontakt" class="situation reveal">
+          <span class="quote">„Dete ide <em>prvi put</em>“</span>
+          <p>Prvi pregled dete provede u igri, tako da naredne posete prođu lako i bez suza.</p>
+          <span class="go">Dečja stomatologija <i><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></i></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="usluge" class="services">
     <div class="wrap services-grid">
       <div class="services-intro reveal">
         <span class="label">Usluge</span>
         <h2>Rešavamo sve što ti <em>smeta u ustima</em></h2>
         <p>Radimo osam oblasti stomatologije u istoj ordinaciji. Ne šaljemo te dalje za drugi deo terapije, sve pratimo od prvog pregleda do poslednje kontrole.</p>
         <div class="services-photo">
-          <img src="assets/kraljevo-estetska-stomatologija.jpg" alt="Pacijentkinja se smeje i gleda svoj osmeh u ogledalu posle tretmana">
+          <img src="assets/Oralna-hirurgija-kraljevo-1.jpg" alt="Rendgenski snimci zuba na svetlećem negatoskopu u ordinaciji">
         </div>
       </div>
 
@@ -977,82 +1252,136 @@
   </section>
 
   <section class="about" id="o-nama">
-    <div class="wrap about-grid">
-      <figure class="about-media reveal">
-        <img src="assets/oralna-hirurgija-kraljevo.jpg" alt="Doktorka Erdoglija Dental sa instrumentima u toku pregleda pacijenta">
-        <figcaption><span>Vodi tim</span>Dr Slađana Erdoglija</figcaption>
-      </figure>
-      <div class="about-text reveal">
-        <span class="label">O nama</span>
-        <h2>Ordinacija u kojoj radi ceo tim, <em>ne jedan doktor</em></h2>
-        <p>Erdoglija Dental radi u Kraljevu i pokriva sve oblasti stomatologije pod jednim krovom. Dr Slađana Erdoglija vodi tim koji zajedno prati tvoju terapiju od prvog pregleda do poslednje kontrole.</p>
-        <p>Koristimo savremenu opremu za snimke i planiranje terapije, i svaki korak ti objasnimo pre nego što počnemo. Nema iznenađenja na računu ni u stolici.</p>
-
-        <ul class="about-features">
-          <li><span class="num">01</span>Sve struke stomatologije na jednoj adresi</li>
-          <li><span class="num">02</span>Savremena dijagnostika i digitalni snimci</li>
-          <li><span class="num">03</span>Plan terapije i cena pre nego što počnemo</li>
-        </ul>
+    <div class="wrap">
+      <div class="about-head reveal">
+        <div>
+          <span class="label">O nama</span>
+          <h2>Ordinacija u kojoj radi ceo tim, <em>ne jedan doktor</em></h2>
+        </div>
+        <div>
+          <p>Erdoglija Dental radi u Kraljevu i pokriva sve oblasti stomatologije pod jednim krovom. Dr Slađana Erdoglija vodi tim koji zajedno prati tvoju terapiju od prvog pregleda do poslednje kontrole.</p>
+          <p>Koristimo savremenu opremu za snimke i planiranje terapije, i svaki korak ti objasnimo pre nego što počnemo. Nema iznenađenja na računu ni u stolici.</p>
+        </div>
       </div>
+
+      <figure class="team-photo reveal">
+        <img src="assets/image00007.jpg" alt="Tim stomatologa i sestara Erdoglija Dental u ordinaciji u Kraljevu">
+        <figcaption>Dr Slađana Erdoglija i tim <span>· Kraljevo</span></figcaption>
+      </figure>
+
+      <ul class="about-features reveal">
+        <li><span class="num">01</span>Sve struke stomatologije na jednoj adresi</li>
+        <li><span class="num">02</span>Savremena dijagnostika i digitalni snimci</li>
+        <li><span class="num">03</span>Plan terapije i cena pre nego što počnemo</li>
+        <li><span class="num">04</span>Radimo i subotom, od 09 do 14h</li>
+      </ul>
     </div>
   </section>
 
   <section id="zakazivanje">
     <div class="wrap">
-      <div class="process-head reveal">
+      <div class="process-grid">
+        <figure class="process-media reveal">
+          <img src="assets/oralna-hirurgija-kraljevo.jpg" alt="Doktorka Erdoglija Dental sa instrumentima u toku pregleda pacijenta">
+          <figcaption><small>Prvi pregled</small>Pregled, snimak i objašnjenje u jednoj poseti</figcaption>
+        </figure>
+
         <div>
-          <span class="label">Kako zakazivanje izgleda</span>
-          <h2>Tri koraka <em>do termina</em></h2>
+          <div class="process-intro reveal">
+            <span class="label">Kako zakazivanje izgleda</span>
+            <h2>Tri koraka <em>do termina</em></h2>
+            <p>Ne moraš da znaš tačan naziv problema. Kažeš nam šta te muči, mi predlažemo rešenje.</p>
+          </div>
+
+          <ol class="steps">
+            <li class="step reveal">
+              <span class="step-num">01</span>
+              <div>
+                <h3>Pozovi ili popuni formu</h3>
+                <p>Javiš se telefonom ili preko forme ispod, kažeš šta te muči i kad ti odgovara termin.</p>
+                <div class="step-tags"><span>Telefon</span><span>Forma na sajtu</span><span>Odgovor isti radni dan</span></div>
+              </div>
+            </li>
+            <li class="step reveal">
+              <span class="step-num">02</span>
+              <div>
+                <h3>Dolazak na pregled</h3>
+                <p>Na prvom pregledu radimo snimak i pregled, i odmah ti kažemo šta vidimo i zašto.</p>
+                <div class="step-tags"><span>Pregled</span><span>Digitalni snimak</span><span>Objašnjenje</span></div>
+              </div>
+            </li>
+            <li class="step reveal">
+              <span class="step-num">03</span>
+              <div>
+                <h3>Plan terapije</h3>
+                <p>Dobijaš plan terapije sa cenom i rokovima, pa ti odlučuješ kad kreneš dalje.</p>
+                <div class="step-tags"><span>Cena unapred</span><span>Rokovi</span><span>Ti biraš kad krećeš</span></div>
+              </div>
+            </li>
+          </ol>
+
+          <div class="process-cta reveal">
+            <a href="#kontakt" class="btn btn-primary has-arrow">Zakaži besplatnu konsultaciju
+              <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span>
+            </a>
+            <a href="tel:036123456" class="btn btn-secondary">Pozovi 036/123-456</a>
+            <span class="phone-note">Radnim danima <span style="white-space:nowrap">08-20h</span>, subotom <span style="white-space:nowrap">09-14h</span></span>
+          </div>
         </div>
-        <p>Ne moraš da znaš tačan naziv problema. Kažeš nam šta te muči, mi predlažemo rešenje.</p>
       </div>
 
-      <ol class="process-grid">
-        <li class="process-card reveal">
-          <div class="process-num">01</div>
-          <h3>Pozovi ili popuni formu</h3>
-          <p>Javiš se telefonom ili preko forme ispod, kažeš šta te muči i kad ti odgovara termin.</p>
-        </li>
-        <li class="process-card reveal">
-          <div class="process-num">02</div>
-          <h3>Dolazak na pregled</h3>
-          <p>Na prvom pregledu radimo snimak i pregled, i odmah ti kažemo šta vidimo i zašto.</p>
-        </li>
-        <li class="process-card reveal">
-          <div class="process-num">03</div>
-          <h3>Plan terapije</h3>
-          <p>Dobijaš plan terapije sa cenom i rokovima, pa ti odlučuješ kad kreneš dalje.</p>
-        </li>
-      </ol>
-
-      <div class="process-cta reveal">
-        <a href="#kontakt" class="btn btn-primary has-arrow">Zakaži besplatnu konsultaciju
-          <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span>
-        </a>
-        <a href="tel:036123456" class="btn btn-secondary">Pozovi 036/123-456</a>
-        <span class="phone-note">Radnim danima <span style="white-space:nowrap">08-20h</span>, subotom <span style="white-space:nowrap">09-14h</span></span>
+      <div class="gallery-grid" aria-label="Iz ordinacije">
+        <figure class="reveal">
+          <img src="assets/Stomatoloska-protetika-kraljevo-zubar.jpg" alt="Keramički protetski rad, gornji niz zuba na crnoj podlozi">
+          <figcaption>Protetika</figcaption>
+        </figure>
+        <figure class="reveal">
+          <img src="assets/ortodencija-zubar-kraljevo.jpg" alt="Mobilni ortodontski aparat i šarene elastične ligature na dlanu">
+          <figcaption>Ortodoncija</figcaption>
+        </figure>
+        <figure class="reveal">
+          <img src="assets/snimak-zuba.jpg" alt="Ruka u rukavici drži ortopan snimak zuba u ordinaciji">
+          <figcaption>Digitalni snimci</figcaption>
+        </figure>
       </div>
     </div>
   </section>
 
-  <section class="gallery" aria-label="Iz ordinacije">
-    <div class="wrap gallery-grid">
-      <figure class="reveal">
-        <img src="assets/Stomatoloska-protetika-kraljevo-zubar.jpg" alt="Keramički protetski rad, gornji niz zuba na crnoj podlozi">
-        <figcaption>Protetika</figcaption>
-      </figure>
-      <figure class="reveal">
-        <img src="assets/ortodencija-zubar-kraljevo.jpg" alt="Mobilni ortodontski aparat i šarene elastične ligature na dlanu">
-        <figcaption>Ortodoncija</figcaption>
-      </figure>
-      <figure class="reveal">
-        <img src="assets/deciji-zubar-kraljevo-erdoglija-dental.jpg" alt="Nasmejan dečak u stomatološkoj stolici">
-        <figcaption>Dečja stomatologija</figcaption>
-      </figure>
-      <figure class="reveal">
-        <img src="assets/snimak-zuba.jpg" alt="Ruka u rukavici drži ortopan snimak zuba u ordinaciji">
-        <figcaption>Digitalni snimci</figcaption>
-      </figure>
+  <section class="faq" id="pitanja">
+    <div class="wrap faq-grid">
+      <div class="faq-intro reveal">
+        <span class="label">Pitanja</span>
+        <h2>Ono što nas <em>najčešće pitaju</em></h2>
+        <p>Ako tvoje pitanje nije ovde, pozovi. Odgovaramo radnim danima od 08 do 20h i subotom od 09 do 14h.</p>
+        <a href="tel:036123456" class="btn-tertiary">Pozovi 036/123-456 <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a>
+      </div>
+
+      <div class="faq-list reveal">
+        <details open>
+          <summary>Da li je prva konsultacija besplatna?<i></i></summary>
+          <p>Jeste. Na konsultaciji pogledamo zube, kažemo šta vidimo i predložimo terapiju. Posle toga ti odlučuješ da li i kad krećeš.</p>
+        </details>
+        <details>
+          <summary>Koliko se čeka na termin?<i></i></summary>
+          <p>Kad se javiš, dobijaš termin još iste nedelje. Na zahtev poslat preko forme javljamo se isti radni dan.</p>
+        </details>
+        <details>
+          <summary>Da li će me boleti?<i></i></summary>
+          <p>Zahvate radimo uz lokalnu anesteziju, a pre početka ti objasnimo svaki korak, da znaš šta sledi.</p>
+        </details>
+        <details>
+          <summary>Da li unapred znam koliko košta?<i></i></summary>
+          <p>Da. Posle pregleda dobijaš plan terapije sa cenom i rokovima, pre nego što bilo šta počnemo.</p>
+        </details>
+        <details>
+          <summary>Primate li decu?<i></i></summary>
+          <p>Primamo. Prvi pregled je prilagođen detetu, da se opusti i da naredne posete prođu lako.</p>
+        </details>
+        <details>
+          <summary>Da li radite subotom?<i></i></summary>
+          <p>Radimo, subotom od 09 do 14h. Radnim danima smo tu od 08 do 20h.</p>
+        </details>
+      </div>
     </div>
   </section>
 
@@ -1070,6 +1399,7 @@
               <div>
                 <small>Adresa</small>
                 <p>Cara Lazara 15, 36000 Kraljevo</p>
+                <p><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Erdoglija+Dental+Kraljevo" target="_blank" rel="noopener">Otvori u Google mapama →</a></p>
               </div>
             </li>
             <li class="contact-item">
@@ -1143,7 +1473,8 @@
           <h4>Stranica</h4>
           <a href="#usluge">Usluge</a>
           <a href="#o-nama">O nama</a>
-          <a href="#zakazivanje">Zakazivanje</a>
+          <a href="#zakazivanje">Prvi pregled</a>
+          <a href="#pitanja">Pitanja</a>
           <a href="#kontakt">Kontakt</a>
         </div>
         <div class="footer-col">
@@ -1203,6 +1534,39 @@
     } else {
       document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
     }
+
+    // Status "otvoreno sada" po radnom vremenu (Pon-Pet 08-20h, Sub 09-14h)
+    (function(){
+      const pill = document.getElementById('openStatus');
+      if (!pill) return;
+      const hours = { 1:[8,20], 2:[8,20], 3:[8,20], 4:[8,20], 5:[8,20], 6:[9,14] };
+      const names = ['nedelja','ponedeljak','utorak','sreda','četvrtak','petak','subota'];
+      const now = new Date();
+      const day = now.getDay();
+      const h = now.getHours() + now.getMinutes() / 60;
+      const today = hours[day];
+      const main = pill.querySelector('.main');
+      const sub = pill.querySelector('.sub');
+      if (today && h >= today[0] && h < today[1]) {
+        pill.classList.add('is-open');
+        main.textContent = 'Otvoreno sada';
+        sub.textContent = 'do ' + today[1] + 'h';
+        return;
+      }
+      pill.classList.add('is-closed');
+      main.textContent = 'Trenutno zatvoreno';
+      if (today && h < today[0]) {
+        sub.textContent = 'otvaramo u ' + String(today[0]).padStart(2, '0') + 'h';
+        return;
+      }
+      for (let i = 1; i <= 7; i++) {
+        const d = (day + i) % 7;
+        if (hours[d]) {
+          sub.textContent = (i === 1 ? 'sutra' : names[d]) + ' od ' + String(hours[d][0]).padStart(2, '0') + 'h';
+          break;
+        }
+      }
+    })();
   </script>
 
 </body>
